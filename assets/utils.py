@@ -3,20 +3,22 @@
         Joint 2D-3D-Semantic Data for Indoor Scene Understanding
            I. Armeni*, A. Sax*, A. Zamir, S. Savarese
         Website: 3dsemantics.stanford.edu
-        Paper: https://arxiv.org/pdf/1702.01105.pdf 
-        
+        Paper: https://arxiv.org/pdf/1702.01105.pdf
+
     Code Author: Alexander Sax
-    
+
     Usage: For import only. i.e. 'import utils.py'
       Dependencies include scipy, OpenEXR
 """
 
 import array
-import Imath
+#import Imath
 import json
-import numpy
-import OpenEXR
-from   scipy.ndimage import imread
+import numpy as np
+#import OpenEXR
+""" imread is deprecated in SciPy. """
+#from scipy.ndimage import imread
+import cv2
 
 """ Semantics """
 def get_index( color ):
@@ -38,7 +40,7 @@ def get_color( i ):
     '''
     b = ( i ) % 256  # least significant byte
     g = ( i >> 8 ) % 256
-    r = ( i >> 16 ) % 256 # most significant byte 
+    r = ( i >> 16 ) % 256 # most significant byte
     return r,g,b
 
 """ Label functions """
@@ -58,8 +60,7 @@ def parse_label( label ):
     res[ 'area_num' ] = int( area_num )
     return res
 
-
-""" EXR Functions """
+""" EXR Functions
 def normalize_array_for_matplotlib( arr_to_rescale ):
     ''' Rescales an array to be between [0, 1]
     Args:
@@ -70,10 +71,10 @@ def normalize_array_for_matplotlib( arr_to_rescale ):
     return ( arr_to_rescale / np.abs( arr_to_rescale ).max() ) / 2 + 0.5
 
 def read_exr( image_fpath ):
-    """ Reads an openEXR file into an RGB matrix with floats """
+    # Reads an openEXR file into an RGB matrix with floats
     f = OpenEXR.InputFile( image_fpath )
     dw = f.header()['dataWindow']
-    w, h = (dw.max.x - dw.min.x + 1, dw.max.y - dw.min.y + 1)    
+    w, h = (dw.max.x - dw.min.x + 1, dw.max.y - dw.min.y + 1)
     im = np.empty( (h, w, 3) )
 
     # Read in the EXR
@@ -82,5 +83,4 @@ def read_exr( image_fpath ):
     for i, channel in enumerate( channels ):
         im[:,:,i] = np.reshape( array.array( 'f', channel ), (h, w) )
     return im
-
-
+"""
