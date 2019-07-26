@@ -11,6 +11,7 @@ def mouse_clicked(event, x, y, flags, images):
 def get_object_name(image, x, y):
     # OpenCV returns pixels in order of BGR. So, Flip it to be RGB.
     pix = np.flip(image[y, x])
+    print('pixels: ' + str(pix))
     i = get_index(pix)
     if i < len(labels):
         instance_label = labels[i]
