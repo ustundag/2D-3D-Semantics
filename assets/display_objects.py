@@ -43,7 +43,7 @@ def write_object_name(images, x, y):
 def get_object_name(image, x, y):
     # OpenCV returns pixels in order of BGR. So, Flip it to be RGB.
     object = 'MISSING'
-    pix = np.flip(image[y, x])
+    pix = np.flip(image[y, x], axis=0)
     i = get_index(pix)
     if i < len(labels):
         instance_label = labels[i]
@@ -56,7 +56,7 @@ def main():
     random_i = random.randint(1, len(LIST_Semantic_Images)-1)
     PATH_im = os.path.join(PATH_Semantic_Images, LIST_Semantic_Images[random_i])
     #image = cv2.imread(PATH_im)
-    image = cv2.imread('camera_0ccf3c78ef354902b516c62ef8fb7cf1_lounge_2_frame_13_domain_semantic.png')
+    image = cv2.imread('camera_81a9927c6b224f4bb5e6b9fbdcfae9c0_office_3_frame_25_domain_semantic.png')
     height, width, depth = image.shape
     image_scaled = cv2.resize(image, (int(height/2), int(width/2)))
 

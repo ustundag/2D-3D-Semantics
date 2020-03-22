@@ -115,7 +115,7 @@ class SphereConv2D(nn.Module):
             grid = self.grid.repeat(x.shape[0], 1, 1, 1)
 
         x = x.type(torch.FloatTensor)
-        x = nn.functional.grid_sample(x, grid, mode=self.mode)
+        x = nn.functional.grid_sample(x.cuda(), grid, mode=self.mode)
         x = nn.functional.conv2d(x, self.weight, self.bias, stride=3)
         return x
 
